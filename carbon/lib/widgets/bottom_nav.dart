@@ -28,18 +28,37 @@ class BottomNav extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          IconButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, HomeScreen.id);
-              },
-              icon: Icon(Icons.home)),
-          IconButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, NewsScreen.id);
-              },
-              icon: Icon(Icons.search_rounded)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.fmd_good)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+          TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, HomeScreen.id);
+            },
+            child: Text(
+              "🏡",
+              style: TextStyle(
+                fontSize: 32,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, NewsScreen.id);
+            },
+            child: Text(
+              "🍀",
+              style: TextStyle(
+                fontSize: 32,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {},
+            child: Text(
+              "🧔",
+              style: TextStyle(
+                fontSize: 32,
+              ),
+            ),
+          ),
         ],
       ),
     );
