@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:carbon/utilities/colors.dart';
 
 import 'screens/home_screen.dart';
-import 'widgets/bottom_nav.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,9 +24,18 @@ class MyApp extends StatelessWidget {
         HomeScreen.id: (context) => const HomeScreen(),
         NewsScreen.id: (context) => const NewsScreen(),
         CarbonEmission.id: (context) => const CarbonEmission(),
-        HomeEmission.id: (context) => const HomeEmission(),
-        FoodEmission.id: (context) => const FoodEmission(),
-        Results.id: (context) => const Results(),
+        HomeEmission.id: (context) => HomeEmission(
+              carbonEmissionByTravel: 0,
+            ),
+        FoodEmission.id: (context) => FoodEmission(
+              carbonEmissionByTravel: 0,
+              carbonEmissionByHouse: 0,
+            ),
+        Results.id: (context) => Results(
+              carbonEmissionByHouse: 0,
+              carbonEmissionByTravel: 0,
+              carbonEmissionByFood: 0,
+            ),
       },
       theme: ThemeData(
         appBarTheme: AppBarTheme(

@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 
 class Results extends StatefulWidget {
   static String id = "results";
-  const Results({Key? key}) : super(key: key);
+  double carbonEmissionByTravel;
+  double carbonEmissionByHouse;
+  double carbonEmissionByFood;
+  Results(
+      {Key? key,
+      required this.carbonEmissionByTravel,
+      required this.carbonEmissionByHouse,
+      required this.carbonEmissionByFood})
+      : super(key: key);
 
   @override
   State<Results> createState() => _ResultsState();
@@ -12,6 +20,10 @@ class Results extends StatefulWidget {
 class _ResultsState extends State<Results> {
   @override
   Widget build(BuildContext context) {
+    double totalEmission = (widget.carbonEmissionByTravel +
+        widget.carbonEmissionByHouse +
+        widget.carbonEmissionByFood);
+    totalEmission = double.parse((totalEmission).toStringAsFixed(2));
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
@@ -60,7 +72,7 @@ class _ResultsState extends State<Results> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  "You are releasing 90% less carbon-dioxide comapre to others.Keep it Up!!",
+                  "You are releasing 73% less carbon-dioxide comapre to others.Keep it Up!!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18,
@@ -78,7 +90,7 @@ class _ResultsState extends State<Results> {
                     ),
                   ),
                   Text(
-                    "270t",
+                    "${totalEmission}t",
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -132,7 +144,7 @@ class _ResultsState extends State<Results> {
                               style: TextStyle(fontSize: 40),
                             ),
                             Text(
-                              "30%",
+                              "${double.parse(((widget.carbonEmissionByHouse / totalEmission) * 100).toStringAsFixed(2))}%",
                               style: TextStyle(fontSize: 16),
                             ),
                           ],
@@ -144,7 +156,7 @@ class _ResultsState extends State<Results> {
                               style: TextStyle(fontSize: 40),
                             ),
                             Text(
-                              "40%",
+                              "${double.parse(((widget.carbonEmissionByTravel / totalEmission) * 100).toStringAsFixed(2))}%",
                               style: TextStyle(fontSize: 16),
                             ),
                           ],
@@ -156,7 +168,7 @@ class _ResultsState extends State<Results> {
                               style: TextStyle(fontSize: 40),
                             ),
                             Text(
-                              "30%",
+                              "${double.parse(((widget.carbonEmissionByFood / totalEmission) * 100).toStringAsFixed(2))}%",
                               style: TextStyle(fontSize: 16),
                             ),
                           ],
@@ -200,7 +212,7 @@ class _ResultsState extends State<Results> {
                       ),
                     ),
                     Text(
-                      "You are releasing 90% less carbon-dioxide comapre to others.Keep it Up!!",
+                      "Try for a carpool or public Transport for decreasing the co2 emission",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 18,

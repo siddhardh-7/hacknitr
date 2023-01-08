@@ -1,12 +1,16 @@
 import 'package:carbon/screens/carbon_emission.dart';
 import 'package:carbon/screens/food_carbon_emission.dart';
 import 'package:carbon/screens/results.dart';
+import 'package:carbon/utilities/carbon_finder.dart';
 import 'package:carbon/utilities/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomeEmission extends StatefulWidget {
   static String id = "HomeEmission";
-  const HomeEmission({Key? key}) : super(key: key);
+  double carbonEmissionByTravel;
+  HomeEmission({Key? key, required this.carbonEmissionByTravel})
+      : super(key: key);
 
   @override
   State<HomeEmission> createState() => _HomeEmissionState();
@@ -18,6 +22,7 @@ class _HomeEmissionState extends State<HomeEmission> {
   TextEditingController fridgeController = TextEditingController();
   TextEditingController waterController = TextEditingController();
   String text = "";
+  double carbonEmissionByHouse = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,8 +105,14 @@ class _HomeEmissionState extends State<HomeEmission> {
                         onChanged: (value) {
                           setState(() {
                             fanController.text = value.toString();
+                            fanController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: fanController.text.length));
                           });
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -148,8 +159,13 @@ class _HomeEmissionState extends State<HomeEmission> {
                         onChanged: (value) {
                           setState(() {
                             tvController.text = value.toString();
+                            tvController.selection = TextSelection.fromPosition(
+                                TextPosition(offset: tvController.text.length));
                           });
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -196,8 +212,14 @@ class _HomeEmissionState extends State<HomeEmission> {
                         onChanged: (value) {
                           setState(() {
                             fridgeController.text = value.toString();
+                            fridgeController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: fridgeController.text.length));
                           });
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -245,8 +267,14 @@ class _HomeEmissionState extends State<HomeEmission> {
                         onChanged: (value) {
                           setState(() {
                             waterController.text = value.toString();
+                            waterController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: waterController.text.length));
                           });
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -306,7 +334,22 @@ class _HomeEmissionState extends State<HomeEmission> {
                             EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                         child: TextButton(
                           onPressed: () {
-                            Navigator.popAndPushNamed(context, FoodEmission.id);
+                            carbonEmissionByHouse = CarbonFootPrint
+                                .getDailyHouseHoldCarbonFootPrint(
+                                    double.parse(fanController.text),
+                                    double.parse(tvController.text),
+                                    double.parse(fridgeController.text),
+                                    double.parse(waterController.text));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FoodEmission(
+                                  carbonEmissionByTravel:
+                                      widget.carbonEmissionByTravel,
+                                  carbonEmissionByHouse: carbonEmissionByHouse,
+                                ),
+                              ),
+                            );
                           },
                           style: TextButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,

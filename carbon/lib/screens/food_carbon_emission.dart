@@ -1,11 +1,19 @@
 import 'package:carbon/screens/home_carbon_emission.dart';
 import 'package:carbon/screens/results.dart';
+import 'package:carbon/utilities/carbon_finder.dart';
 import 'package:carbon/utilities/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FoodEmission extends StatefulWidget {
   static String id = "foodEmission";
-  const FoodEmission({Key? key}) : super(key: key);
+  double carbonEmissionByTravel;
+  double carbonEmissionByHouse;
+  FoodEmission(
+      {Key? key,
+      required this.carbonEmissionByTravel,
+      required this.carbonEmissionByHouse})
+      : super(key: key);
 
   @override
   State<FoodEmission> createState() => _FoodEmissionState();
@@ -17,6 +25,7 @@ class _FoodEmissionState extends State<FoodEmission> {
   TextEditingController dairyController = TextEditingController();
   TextEditingController fruitsController = TextEditingController();
   String text = "";
+  double carbonEmissionByFood = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,8 +108,14 @@ class _FoodEmissionState extends State<FoodEmission> {
                         onChanged: (value) {
                           setState(() {
                             meatController.text = value.toString();
+                            meatController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: meatController.text.length));
                           });
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -147,8 +162,14 @@ class _FoodEmissionState extends State<FoodEmission> {
                         onChanged: (value) {
                           setState(() {
                             grainsController.text = value.toString();
+                            grainsController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: grainsController.text.length));
                           });
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -195,8 +216,14 @@ class _FoodEmissionState extends State<FoodEmission> {
                         onChanged: (value) {
                           setState(() {
                             dairyController.text = value.toString();
+                            dairyController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: dairyController.text.length));
                           });
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -244,8 +271,14 @@ class _FoodEmissionState extends State<FoodEmission> {
                         onChanged: (value) {
                           setState(() {
                             fruitsController.text = value.toString();
+                            fruitsController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: fruitsController.text.length));
                           });
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -305,7 +338,24 @@ class _FoodEmissionState extends State<FoodEmission> {
                             EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                         child: TextButton(
                           onPressed: () {
-                            Navigator.popAndPushNamed(context, Results.id);
+                            carbonEmissionByFood =
+                                CarbonFootPrint.getDailyFoodCarbonFootPrint(
+                                    double.parse(meatController.text),
+                                    double.parse(grainsController.text),
+                                    double.parse(dairyController.text),
+                                    double.parse(fruitsController.text));
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Results(
+                                  carbonEmissionByTravel:
+                                      widget.carbonEmissionByTravel,
+                                  carbonEmissionByHouse:
+                                      widget.carbonEmissionByHouse,
+                                  carbonEmissionByFood: carbonEmissionByFood,
+                                ),
+                              ),
+                            );
                           },
                           style: TextButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,
@@ -316,7 +366,7 @@ class _FoodEmissionState extends State<FoodEmission> {
                             shadowColor: AppColors.blackshade1,
                           ),
                           child: Text(
-                            "Next",
+                            "Submit",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,

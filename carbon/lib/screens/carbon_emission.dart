@@ -1,6 +1,8 @@
 import 'package:carbon/screens/home_carbon_emission.dart';
+import 'package:carbon/utilities/carbon_finder.dart';
 import 'package:carbon/utilities/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CarbonEmission extends StatefulWidget {
   static String id = 'carbonEmission';
@@ -16,6 +18,7 @@ class _CarbonEmissionState extends State<CarbonEmission> {
   TextEditingController busController = TextEditingController();
   TextEditingController taxiController = TextEditingController();
   String text = "";
+  double carbonEmissionByTravel = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +102,12 @@ class _CarbonEmissionState extends State<CarbonEmission> {
                           setState(() {
                             carController.text = value.toString();
                           });
+                          carController.selection = TextSelection.fromPosition(
+                              TextPosition(offset: carController.text.length));
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -145,9 +153,15 @@ class _CarbonEmissionState extends State<CarbonEmission> {
                         controller: bikeController,
                         onChanged: (value) {
                           setState(() {
-                            carController.text = value.toString();
+                            bikeController.text = value.toString();
+                            bikeController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: bikeController.text.length));
                           });
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -193,9 +207,15 @@ class _CarbonEmissionState extends State<CarbonEmission> {
                         controller: busController,
                         onChanged: (value) {
                           setState(() {
-                            carController.text = value.toString();
+                            busController.text = value.toString();
+                            busController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: busController.text.length));
                           });
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -242,9 +262,15 @@ class _CarbonEmissionState extends State<CarbonEmission> {
                         cursorColor: AppColors.primaryColor,
                         onChanged: (value) {
                           setState(() {
-                            carController.text = value.toString();
+                            taxiController.text = value.toString();
+                            taxiController.selection =
+                                TextSelection.fromPosition(TextPosition(
+                                    offset: taxiController.text.length));
                           });
                         },
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide:
@@ -274,7 +300,19 @@ class _CarbonEmissionState extends State<CarbonEmission> {
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   child: TextButton(
                     onPressed: () {
-                      Navigator.popAndPushNamed(context, HomeEmission.id);
+                      carbonEmissionByTravel =
+                          CarbonFootPrint.getDailyTravelFootPrint(
+                              double.parse(bikeController.text),
+                              double.parse(carController.text),
+                              double.parse(busController.text));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeEmission(
+                            carbonEmissionByTravel: carbonEmissionByTravel,
+                          ),
+                        ),
+                      );
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: AppColors.primaryColor,
