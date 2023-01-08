@@ -299,39 +299,39 @@ class _HomeEmissionState extends State<HomeEmission> {
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    Container(
-                      width: 200,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.popAndPushNamed(context, CarbonEmission.id);
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 8,
-                            horizontal: 20,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0, vertical: 15),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.popAndPushNamed(
+                                context, CarbonEmission.id);
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: AppColors.primaryColor,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 20,
+                            ),
+                            shadowColor: AppColors.blackshade1,
                           ),
-                          shadowColor: AppColors.blackshade1,
-                        ),
-                        child: Text(
-                          "Previous",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.whiteshade,
+                          child: Text(
+                            "Previous",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.whiteshade,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: 200,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
                         child: TextButton(
                           onPressed: () {
                             carbonEmissionByHouse = CarbonFootPrint
@@ -369,8 +369,8 @@ class _HomeEmissionState extends State<HomeEmission> {
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
