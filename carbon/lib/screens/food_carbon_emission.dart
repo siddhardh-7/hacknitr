@@ -132,7 +132,7 @@ class _FoodEmissionState extends State<FoodEmission> {
                           focusColor: Colors.white,
                           fillColor: AppColors.backgroundColor,
                           prefix: Text(
-                            "🍃 ",
+                            "🍗 ",
                             style: TextStyle(fontSize: 23),
                           ),
                         ),
@@ -186,7 +186,7 @@ class _FoodEmissionState extends State<FoodEmission> {
                           focusColor: Colors.white,
                           fillColor: AppColors.backgroundColor,
                           prefix: Text(
-                            "📺 ",
+                            "🌾 ",
                             style: TextStyle(fontSize: 23),
                           ),
                         ),
@@ -240,7 +240,7 @@ class _FoodEmissionState extends State<FoodEmission> {
                           focusColor: Colors.white,
                           fillColor: AppColors.backgroundColor,
                           prefix: Text(
-                            "🧊 ",
+                            "🥛 ",
                             style: TextStyle(fontSize: 23),
                           ),
                         ),
@@ -295,7 +295,7 @@ class _FoodEmissionState extends State<FoodEmission> {
                           focusColor: Colors.white,
                           fillColor: AppColors.backgroundColor,
                           prefix: Text(
-                            "🚿 ",
+                            "🍇 ",
                             style: TextStyle(fontSize: 23),
                           ),
                         ),
@@ -303,39 +303,37 @@ class _FoodEmissionState extends State<FoodEmission> {
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    Container(
-                      width: 200,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.popAndPushNamed(context, HomeEmission.id);
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
-                          padding: EdgeInsets.symmetric(
-                            vertical: 8,
-                            horizontal: 20,
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.popAndPushNamed(context, HomeEmission.id);
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: AppColors.primaryColor,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 20,
+                            ),
+                            shadowColor: AppColors.blackshade1,
                           ),
-                          shadowColor: AppColors.blackshade1,
-                        ),
-                        child: Text(
-                          "Previous",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.whiteshade,
+                          child: Text(
+                            "Previous",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.whiteshade,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: 200,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
                         child: TextButton(
                           onPressed: () {
                             carbonEmissionByFood =
@@ -375,8 +373,8 @@ class _FoodEmissionState extends State<FoodEmission> {
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
